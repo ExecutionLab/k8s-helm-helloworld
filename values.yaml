@@ -22,6 +22,18 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+
 service:
   type: ClusterIP
   port: 80
+
+ingress:
+  host: hello-world.local.exelab.asia
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-dev
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 128m
+  tls:
+    - hosts: [hello-world.local.exelab.asia]
+      secretName: hello-world

@@ -31,3 +31,15 @@ spec:
             httpGet:
               path: /
               port: http
+          volumeMounts:
+            - name: nginx-static-site-config-volume
+              mountPath: /etc/nginx/conf.d
+            - name: nginx-static-site-content-volume
+              mountPath: /usr/share/nginx/html/static-site
+      volumes:
+        - name: nginx-static-site-config-volume
+          configMap:
+            name: nginx-static-site-config
+        - name: nginx-static-site-content-volume
+          configMap:
+            name: nginx-static-site-content

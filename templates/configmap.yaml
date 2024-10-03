@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-static-site-config
+data:
+  static-site.conf: |
+    server {
+        listen 80;
+        server_name {{ .Values.ingress.host }};
+        root /usr/share/nginx/html/static-site;
+
+        error_page 404 /404.html;
+        error_page 500 502 503 504 /50x.html;
+        index index.html;
+
+        location / {
+          try_files $uri $uri/ $uri.html =404;
+        }
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-static-site-content
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Hello world</title>
+    </head>
+    <body>
+      <h1>Hello world</h1>
+    </body>
+    </html>
